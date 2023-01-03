@@ -1,12 +1,9 @@
-import axios from "axios";
-import { yupResolver } from "@hookform/resolvers/yup";
+import SignInPresenter from "./signin.presenter";
 import * as yup from "yup";
-import LoginPresenter from "./login.presenter";
 import { useForm } from "react-hook-form";
-import { useRouter } from "next/router";
-export default function LoginContainer() {
-  const router = useRouter();
-
+import { yupResolver } from "@hookform/resolvers/yup";
+import axios from "axios";
+export default function SignInContainer() {
   const schema = yup.object({
     id: yup
       .string()
@@ -25,7 +22,7 @@ export default function LoginContainer() {
 
   const onSubmitInfo = async (data: any) => {
     await axios
-      .post("http://localhost:8080/users/login", {
+      .post("http://localhost:8080/users/create", {
         email: data.id,
         password: data.pw,
       })
@@ -33,12 +30,11 @@ export default function LoginContainer() {
         const TOKEN = response.data.token;
         console.log(response, response.data.token);
         localStorage.setItem("Token", TOKEN);
-        router.push("/todo");
       })
       .catch((e) => {
         console.log(e.message);
       });
   };
 
-  return <LoginPresenter onSubmitInfo={onSubmitInfo} register={register} handleSubmit={handleSubmit} errors={errors} />;
+  return <SignInPresenter register={register} handleSubmit={handleSubmit} onSubmitInfo={onSubmitInfo} errors={errors} />;
 }
