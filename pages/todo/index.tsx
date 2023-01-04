@@ -1,5 +1,5 @@
-import TodoContainer from "../../src/todo/todo.container";
+import TodoListContainer from "../../src/todo/list/list.container";
 
 export default function Todo() {
-  return <TodoContainer />;
+  return <TodoListContainer />;
 }
