@@ -30,10 +30,10 @@ export default function LoginContainer() {
         password: data.pw,
       })
       .then((response) => {
+        alert("로그인 되었습니다!");
         const TOKEN = response.data.token;
-        console.log(response, response.data.token);
         localStorage.setItem("Token", TOKEN);
-        router.push("/todo");
+        router.push("/");
       })
       .catch((e) => {
         console.log(e.message);

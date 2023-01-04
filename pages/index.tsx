@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import styles from "../styles/Home.module.css";
 import styled from "@emotion/styled";
+import { useEffect } from "react";
 
 // styles
 const Wrapper = styled.div`
@@ -20,18 +21,43 @@ const RouterWrapper = styled.div`
 
 export default function Home() {
   const router = useRouter();
+
   const onClickMoveToPage = (event: any) => {
-    router.push(event.currentTarget.id);
+    const login = localStorage.getItem("Token");
+    const href = event.currentTarget.id;
+
+    if (href !== "/todo") {
+      router.push(href);
+    }
+    if (href == "/todo") {
+      if (login) router.push(href);
+      else alert("로그인해주세요");
+    }
+  };
+
+  const onClickLogOut = () => {
+    localStorage.removeItem("Token");
+    alert("로그아웃 되었습니다.");
+    router.push("/");
   };
   return (
     <Wrapper>
       <h1>Wanted Free OnBoarding</h1>
       <RouterWrapper>
-        <div style={{ cursor: "pointer" }} id="/login" onClick={onClickMoveToPage}>
-          login
-        </div>
-        <div id="/signin" onClick={onClickMoveToPage}>
+        {!localStorage.getItem("Token") ? (
+          <div style={{ cursor: "pointer" }} id="/login" onClick={onClickMoveToPage}>
+            login
+          </div>
+        ) : (
+          <div style={{ cursor: "pointer" }} onClick={onClickLogOut}>
+            logOut
+          </div>
+        )}
+        <div style={{ cursor: "pointer" }} id="/signin" onClick={onClickMoveToPage}>
           signin
+        </div>
+        <div style={{ cursor: "pointer" }} id="/todo" onClick={onClickMoveToPage}>
+          TodoList
         </div>
       </RouterWrapper>
     </Wrapper>
