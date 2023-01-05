@@ -3,7 +3,7 @@ import { ChangeEvent, MouseEvent, useState } from "react";
 import { useForm } from "react-hook-form";
 import TodoPresenter from "./new.presenter";
 
-export default function TodoContainer() {
+export default function TodoContainer(props: any) {
   const { register, handleSubmit } = useForm();
 
   const onClickSubmit = async (data: any) => {
@@ -21,9 +21,22 @@ export default function TodoContainer() {
           },
         }
       )
-      .then((response) => {
+      .then(async (response) => {
         console.log(response);
         alert("등록이 완료되었습니다!");
+        props.setIsNew(false);
+        await axios
+          .get(`http://localhost:8080/todos/`, {
+            headers: {
+              Authorization: Token,
+            },
+          })
+          .then((response) => {
+            props.setList(response.data.data.reverse());
+          })
+          .catch((error) => {
+            console.log(error.message);
+          });
       })
       .catch((error) => {
         console.log(error.message);
