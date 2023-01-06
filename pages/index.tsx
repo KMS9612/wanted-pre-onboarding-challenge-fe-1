@@ -28,7 +28,11 @@ export default function Home() {
     const href = event.currentTarget.id;
 
     if (href !== "/todo") {
-      router.push(href);
+      if (href === "/signin") {
+        login ? alert("로그인상태입니다. 로그아웃 후 진행해주세요") : router.push(href);
+      } else {
+        router.push(href);
+      }
     }
     if (href == "/todo") {
       if (login) router.push(href);

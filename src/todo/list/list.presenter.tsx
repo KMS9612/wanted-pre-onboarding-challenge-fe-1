@@ -9,7 +9,7 @@ export default function TodoListPresenter(props: any) {
       </S.BtnWrapper>
       <div>
         {props.List?.map((el: any, index: any) => (
-          <S.ListItem key={index}>
+          <S.ListItem id={index} key={index}>
             <S.TextBox>
               <S.Title>제목 :{el.title}</S.Title>
               <S.Content>내용 :{el.content}</S.Content>
@@ -18,7 +18,9 @@ export default function TodoListPresenter(props: any) {
               <S.Btns id={el.id} onClick={props.onClickDeleteTodo}>
                 삭제
               </S.Btns>
-              <S.Btns>수정</S.Btns>
+              <S.Btns id={index} onClick={props.onClickShowUpdateInput}>
+                수정
+              </S.Btns>
             </S.BtnBox>
           </S.ListItem>
         ))}
