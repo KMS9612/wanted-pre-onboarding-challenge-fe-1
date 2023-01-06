@@ -5,12 +5,6 @@ import TodoListPresenter from "./list.presenter";
 export default function TodoListContainer() {
   const [List, setList] = useState<string[]>([]);
   const [isNew, setIsNew] = useState<Boolean>(false);
-  const [isEdit, setIsEdit] = useState<Boolean>(false);
-
-  const onClickShowUpdateInput = (event: any) => {
-    console.log(event.target.id, "타겟아이디", isEdit);
-    setIsEdit((prev) => !prev);
-  };
 
   const onClickDeleteTodo = (event: MouseEvent<HTMLButtonElement>) => {
     axios
@@ -49,16 +43,5 @@ export default function TodoListContainer() {
   useEffect(() => {
     ListUp();
   }, []);
-  return (
-    <TodoListPresenter
-      onClickShowUpdateInput={onClickShowUpdateInput}
-      onClickDeleteTodo={onClickDeleteTodo}
-      List={List}
-      onClickCallEditer={onClickCallEditer}
-      isNew={isNew}
-      isEdit={isEdit}
-      setIsNew={setIsNew}
-      setList={setList}
-    />
-  );
+  return <TodoListPresenter ListUp={ListUp} onClickDeleteTodo={onClickDeleteTodo} List={List} onClickCallEditer={onClickCallEditer} isNew={isNew} setIsNew={setIsNew} setList={setList} />;
 }
