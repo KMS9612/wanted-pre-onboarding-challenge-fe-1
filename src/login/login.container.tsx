@@ -12,7 +12,10 @@ export default function LoginContainer() {
       .string()
       .matches(/^\w+@\w+\.\w+$/, "이메일 형식이 맞지않습니다")
       .required("아이디를 입력해주세요"),
-    pw: yup.string().min(8, "비밀번호는 8자리 이상 입니다.").required("비밀번호를 입력해주세요"),
+    pw: yup
+      .string()
+      .min(8, "비밀번호는 8자리 이상 입니다.")
+      .required("비밀번호를 입력해주세요"),
   });
 
   const {
@@ -40,5 +43,12 @@ export default function LoginContainer() {
       });
   };
 
-  return <LoginPresenter onSubmitInfo={onSubmitInfo} register={register} handleSubmit={handleSubmit} errors={errors} />;
+  return (
+    <LoginPresenter
+      onSubmitInfo={onSubmitInfo}
+      register={register}
+      handleSubmit={handleSubmit}
+      errors={errors}
+    />
+  );
 }
