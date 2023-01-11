@@ -1,11 +1,12 @@
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import TodoPresenter from "./new.presenter";
+import { IDataCreateNewTodos, IPropsNewContainer } from "./new.types";
 
-export default function TodoContainer(props: any) {
+export default function TodoContainer(props: IPropsNewContainer) {
   const { register, handleSubmit } = useForm();
   // 새로 등록 함수
-  const onClickSubmit = async (data: any) => {
+  const onClickSubmit = async (data: IDataCreateNewTodos) => {
     const Token = localStorage.getItem("Token");
     await axios
       .post(

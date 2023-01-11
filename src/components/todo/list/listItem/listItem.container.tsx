@@ -1,12 +1,13 @@
 import axios from "axios";
-import { useState } from "react";
+import { MouseEvent, useState } from "react";
 import ListItemPresenter from "./listItem.presenter";
+import { IPropsListItemContainer } from "./listItem.types";
 
-export default function ListItemContainer(props: any) {
+export default function ListItemContainer(props: IPropsListItemContainer) {
   const [isEdit, setIsEdit] = useState<Boolean>(false);
   const [value, setValue] = useState<Object>({});
 
-  const onClickShowUpdateInput = async (event: any) => {
+  const onClickShowUpdateInput = async (event: MouseEvent<HTMLButtonElement>) => {
     const Token = localStorage.getItem("Token");
     setIsEdit((prev) => !prev);
     await axios
@@ -16,7 +17,6 @@ export default function ListItemContainer(props: any) {
         },
       })
       .then((response) => {
-        console.log(response.data);
         setValue(response.data);
       })
       .catch((e) => {

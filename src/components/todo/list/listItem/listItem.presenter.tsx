@@ -1,11 +1,20 @@
 import TodoContainer from "../../new/new.container";
 import * as S from "./listItem.styles";
+import { IPropsListItemPresenter } from "./listItem.types";
 
-export default function ListItemPresenter(props: any) {
+export default function ListItemPresenter(props: IPropsListItemPresenter) {
   return (
     <S.Wrapper>
       {props.isEdit ? (
-        <TodoContainer value={props.value} ListUp={props.ListUp} setIsEdit={props.setIsEdit} ItemId={props.el.id} isEdit={props.isEdit} onClickShowUpdateInput={props.onClickShowUpdateInput} />
+        <TodoContainer
+          setIsNew={props.setIsNew}
+          value={props.value}
+          ListUp={props.ListUp}
+          setIsEdit={props.setIsEdit}
+          ItemId={props.el.id}
+          isEdit={props.isEdit}
+          onClickShowUpdateInput={props.onClickShowUpdateInput}
+        />
       ) : (
         <S.ListItem>
           <S.TextBox>

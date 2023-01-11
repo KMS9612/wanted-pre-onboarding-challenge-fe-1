@@ -35,6 +35,7 @@ export default function TodoListContainer() {
       })
       .then((response) => {
         setList(response.data.data.reverse());
+        console.log(response.data.data.reverse());
       })
       .catch((error) => {
         console.log(error.message);

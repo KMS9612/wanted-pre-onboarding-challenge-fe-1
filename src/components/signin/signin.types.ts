@@ -1,7 +1,7 @@
 import { FieldErrorsImpl, FieldValues, UseFormHandleSubmit, UseFormRegister } from "react-hook-form";
 
 export interface IPropsSignIn {
-  onSubmitInfo: (data: any) => void;
+  onSubmitInfo: (data: IDataSigninForm) => void;
   register: UseFormRegister<FieldValues>;
   handleSubmit: UseFormHandleSubmit<FieldValues>;
   errors: Partial<
@@ -9,4 +9,9 @@ export interface IPropsSignIn {
       [x: string]: any;
     }>
   >;
+}
+
+export interface IDataSigninForm {
+  id: string;
+  pw: string;
 }

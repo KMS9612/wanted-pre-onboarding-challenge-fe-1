@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "axios";
 import { useRouter } from "next/router";
+import { IDataSigninForm } from "./signin.types";
 export default function SignInContainer() {
   const router = useRouter();
 
@@ -12,10 +13,7 @@ export default function SignInContainer() {
       .string()
       .matches(/^\w+@\w+\.\w+$/, "이메일 형식이 맞지않습니다")
       .required("아이디를 입력해주세요"),
-    pw: yup
-      .string()
-      .min(8, "비밀번호는 8자리 이상 입니다.")
-      .required("비밀번호를 입력해주세요"),
+    pw: yup.string().min(8, "비밀번호는 8자리 이상 입니다.").required("비밀번호를 입력해주세요"),
   });
 
   const {
@@ -26,7 +24,7 @@ export default function SignInContainer() {
     resolver: yupResolver(schema),
   });
 
-  const onSubmitInfo = async (data: any) => {
+  const onSubmitInfo = async (data: IDataSigninForm) => {
     await axios
       .post("http://localhost:8080/users/create", {
         email: data.id,
@@ -41,12 +39,5 @@ export default function SignInContainer() {
       });
   };
 
-  return (
-    <SignInPresenter
-      register={register}
-      handleSubmit={handleSubmit}
-      onSubmitInfo={onSubmitInfo}
-      errors={errors}
-    />
-  );
+  return <SignInPresenter register={register} handleSubmit={handleSubmit} onSubmitInfo={onSubmitInfo} errors={errors} />;
 }
