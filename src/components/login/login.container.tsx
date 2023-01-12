@@ -5,7 +5,10 @@ import LoginPresenter from "./login.presenter";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import { IDataLoginForm } from "./login.types";
+import useAuth from "../../common/hooks/useAuth";
+import { useEffect } from "react";
 export default function LoginContainer() {
+  const { login } = useAuth();
   const router = useRouter();
 
   const schema = yup.object({
@@ -25,20 +28,11 @@ export default function LoginContainer() {
   });
 
   const onSubmitInfo = async (data: IDataLoginForm) => {
-    await axios
-      .post("http://localhost:8080/users/login", {
-        email: data.id,
-        password: data.pw,
-      })
-      .then((response) => {
-        alert("로그인 되었습니다!");
-        const TOKEN = response.data.token;
-        localStorage.setItem("Token", TOKEN);
-        router.push("/");
-      })
-      .catch((e) => {
-        console.log(e.message);
-      });
+    const SuccessMessage = "로그인성공";
+    const ErrorMessage = "로그인실패 다시 시도해주세요";
+    const SuccessRouting = "/";
+
+    login(data.id, data.pw, SuccessMessage, SuccessRouting, ErrorMessage);
   };
 
   return <LoginPresenter onSubmitInfo={onSubmitInfo} register={register} handleSubmit={handleSubmit} errors={errors} />;

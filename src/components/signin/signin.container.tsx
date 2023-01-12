@@ -5,9 +5,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { IDataSigninForm } from "./signin.types";
+import useAuth from "../../common/hooks/useAuth";
 export default function SignInContainer() {
   const router = useRouter();
-
+  const { signin } = useAuth();
   const schema = yup.object({
     id: yup
       .string()
@@ -24,19 +25,11 @@ export default function SignInContainer() {
     resolver: yupResolver(schema),
   });
 
-  const onSubmitInfo = async (data: IDataSigninForm) => {
-    await axios
-      .post("http://localhost:8080/users/create", {
-        email: data.id,
-        password: data.pw,
-      })
-      .then((response) => {
-        alert("회원가입이 완료되었습니다.");
-        router.push("/");
-      })
-      .catch((e) => {
-        console.log(e.message);
-      });
+  const onSubmitInfo = (data: IDataSigninForm) => {
+    const SuccessMessage = "회원가입에 성공했습니다.";
+    const ErrorMessage = "회원가입에 실패했습니다 다시 시도해 주세요.";
+    const SuccessRouting = "/";
+    signin(data.id, data.pw, SuccessMessage, SuccessRouting, ErrorMessage);
   };
 
   return <SignInPresenter register={register} handleSubmit={handleSubmit} onSubmitInfo={onSubmitInfo} errors={errors} />;

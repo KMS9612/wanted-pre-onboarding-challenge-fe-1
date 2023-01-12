@@ -2,7 +2,7 @@ import { FieldErrorsImpl, FieldValues, UseFormHandleSubmit, UseFormRegister } fr
 import { SubmitHandler } from "react-hook-form/dist/types";
 
 export interface IPropsLogin {
-  onSubmitInfo: (data: IDataLoginForm) => SubmitHandler<FieldValues>;
+  onSubmitInfo: any;
   register: UseFormRegister<FieldValues>;
   handleSubmit: UseFormHandleSubmit<FieldValues>;
   errors: Partial<
